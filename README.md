@@ -11,6 +11,12 @@ https://developers.cloudflare.com/turnstile/troubleshooting/testing/
 - Laravel `^13.0`
 - Filament `^5.0`
 
+## Install the package via Composer:
+```
+composer require adipradana/filament-turnstile
+```
+
+
 ## Environment
 
 ```env

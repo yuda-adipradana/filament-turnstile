@@ -43,6 +43,21 @@ use Adipradana\FilamentTurnstile\Pages\Auth\TurnstileLogin;
 ->login(TurnstileLogin::class)
 ```
 
+
+Path : app/Providers/Filament/AdminPanelProvider.php
+
+```php
+public function panel(Panel $panel): Panel
+{
+    return $panel
+        // ...
+        ->profile()
+        ->login(TurnstileLogin::class); <-- (paste here)
+}
+```
+
+
+
 ## Filament Forms
 
 ```php
@@ -50,6 +65,20 @@ use Adipradana\FilamentTurnstile\Turnstile;
 
 Turnstile::make('captcha'),
 ```
+
+```
+use Adipradana\FilamentTurnstile\Turnstile;
+use Filament\Forms\Components\TextInput;
+
+TextInput::make('number')
+    ->numeric()
+    ->step(100)
+Turnstile::make('captcha') <---- (paste here)
+```
+
+
+
+this for validate Create or Before Save
 
 ## Validate Before Create
 

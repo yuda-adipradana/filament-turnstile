@@ -13,14 +13,15 @@ class FilamentTurnstileServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        $this->loadViewsFrom(__DIR__.'/../Forms/Components', 'filament-turnstile');
+        // ✅ FIX PATH VIEW
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'filament-turnstile');
 
         $this->publishes([
             __DIR__.'/../config/filament-turnstile.php' => config_path('filament-turnstile.php'),
         ], 'filament-turnstile-config');
 
         $this->publishes([
-            __DIR__.'/../Forms/Components' => resource_path('Components/vendor/filament-turnstile'),
-        ], 'filament-turnstile-Components');
+            __DIR__.'/../resources/views' => resource_path('views/vendor/filament-turnstile'),
+        ], 'filament-turnstile-views');
     }
 }

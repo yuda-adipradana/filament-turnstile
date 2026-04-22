@@ -1,24 +1,42 @@
-# Adipradana Filament Turnstile
+# 🚀 Filament Turnstile
 
-Cloudflare Turnstile integration for Laravel Filament login and forms.
+Cloudflare Turnstile integration for Laravel Filament (Login & Forms).
 
-Reference:
-https://developers.cloudflare.com/turnstile/troubleshooting/testing/
+Lightweight, clean, and production-ready captcha alternative with better UX.
 
-## Requirements
+---
 
-- PHP `^8.1 || ^8.2 || ^8.3`
-- Laravel `^13.0`
-- Filament `3.0 || ^4.0 || ^5.0`
-- illuminate/support `^10.0 || ^11.0 || ^12.0 || ^13.0`
+## ✨ Features
 
-## Install the package via Composer:
-```
+* 🔐 Cloudflare Turnstile integration (no annoying captcha)
+* ⚡ Support Filament v3, v4, v5
+* 🧩 Works on Login & Custom Forms
+* 🧼 Clean validation pipeline
+* 🚀 Easy setup (1–2 lines)
+
+---
+
+## 📦 Requirements
+
+* PHP `^8.1 || ^8.2 || ^8.3`
+* Laravel `^10 || ^11 || ^12 || ^13`
+* Filament `^3 || ^4 || ^5`
+
+---
+
+# 🛠 Installation
+
+```bash
 composer require adipradana/filament-turnstile
 ```
 
+---
 
-## Environment
+# ⚙️ Configuration
+
+## 1. Environment Setup
+
+Setup `.env`:
 
 ```env
 # .env.development
@@ -34,9 +52,33 @@ TURNSTILE_SITEKEY=your-real-sitekey
 TURNSTILE_SECRET_KEY=your-real-secret-key
 ```
 
-`TURNSTILE_SITE_KEY` is also supported as an alias for `TURNSTILE_SITEKEY`.
+Alternative:
 
-## Filament Login
+```env
+TURNSTILE_SITEKEY=your_site_key
+```
+
+---
+
+## 2. Publish Config (Optional)
+
+```bash
+php artisan vendor:publish --tag=filament-turnstile-config
+```
+
+File:
+
+```
+config/filament-turnstile.php
+```
+
+---
+
+# 🔐 Usage
+
+## 🔹 Filament Login
+
+Override login Filament:
 
 ```php
 use Adipradana\FilamentTurnstile\Pages\Auth\TurnstileLogin;
@@ -44,60 +86,161 @@ use Adipradana\FilamentTurnstile\Pages\Auth\TurnstileLogin;
 ->login(TurnstileLogin::class)
 ```
 
-
-Path : app/Providers/Filament/AdminPanelProvider.php
-
+📍 Example:
+// app/Providers/Filament/AdminPanelProvider.php
 ```php
+use Adipradana\FilamentTurnstile\Pages\Auth\TurnstileLogin;
+
 public function panel(Panel $panel): Panel
 {
     return $panel
-        // ...
-        ->profile()
-        ->login(TurnstileLogin::class); <-- (paste here)
+        //...
+        
+        ->login(TurnstileLogin::class);
 }
 ```
 
+---
 
-
-## Filament Forms
+## 🔹 Filament Forms
 
 ```php
 use Adipradana\FilamentTurnstile\Turnstile;
+
+Turnstile::make('captcha')
+```
+
+📍 Example:
+
+```php
+use Filament\Forms\Components\TextInput;
+use Adipradana\FilamentTurnstile\Turnstile;
+
+TextInput::make('name'),
 
 Turnstile::make('captcha'),
 ```
 
-```php
-use Adipradana\FilamentTurnstile\Turnstile;use Filament\Forms\Components\TextInput;
+---
 
-TextInput::make('number')
-    ->numeric()
-    ->step(100)
-Turnstile::make('captcha') <---- (paste here)
-```
+## 🔹 Validation (Advanced)
 
-
-
-## this for validate Create or Before Save
-
-## Validate Before Create
+### Before Create
 
 ```php
-use Adipradana\FilamentTurnstile\Turnstile;
-
 protected function mutateFormDataBeforeCreate(array $data): array
 {
-    return Turnstile::validate($data);
+    return \Adipradana\FilamentTurnstile\Turnstile::validate($data);
 }
 ```
 
-## Validate Before Save
+### Before Save
 
 ```php
-use Adipradana\FilamentTurnstile\Turnstile;
-
 protected function mutateFormDataBeforeSave(array $data): array
 {
-    return Turnstile::validate($data);
+    return \Adipradana\FilamentTurnstile\Turnstile::validate($data);
 }
 ```
+
+---
+
+# 🎨 Publish Assets
+
+## Publish All
+
+```bash
+php artisan vendor:publish --provider="Adipradana\FilamentTurnstile\FilamentTurnstileServiceProvider"
+```
+
+---
+
+## Publish Views (Optional)
+
+```bash
+php artisan vendor:publish --tag=filament-turnstile-views
+```
+
+Output:
+
+```
+resources/views/vendor/filament-turnstile/turnstile.blade.php
+```
+
+---
+
+# 🧪 Testing
+
+Cloudflare Reference:
+
+https://developers.cloudflare.com/turnstile/troubleshooting/testing/
+
+---
+
+# 🧹 Clear Cache
+
+```bash
+php artisan optimize:clear
+```
+
+---
+
+# ❌ Uninstall
+
+## 1. Remove package
+
+```bash
+composer remove adipradana/filament-turnstile
+```
+
+---
+
+## 2. Remove published files
+
+```bash
+rm config/filament-turnstile.php
+rm -rf resources/views/vendor/filament-turnstile
+```
+
+---
+
+## 3. Remove ENV
+
+```env
+TURNSTILE_SITE_KEY=
+TURNSTILE_SECRET_KEY=
+```
+
+---
+
+# ⚠️ Common Issues
+
+### ❌ Turnstile tidak muncul
+
+* Check `TURNSTILE_SITE_KEY`
+* run `optimize:clear`
+
+---
+
+### ❌ Validasi selalu gagal
+
+* Check `TURNSTILE_SECRET_KEY`
+* Make request Cloudflare valid
+
+---
+
+### ❌ View not found
+
+* Make sure package is updated
+* run:
+
+```bash
+composer update adipradana/filament-turnstile
+php artisan optimize:clear
+```
+
+---
+
+# 📄 License
+
+MIT License

@@ -7,9 +7,10 @@ https://developers.cloudflare.com/turnstile/troubleshooting/testing/
 
 ## Requirements
 
-- PHP `^8.3`
+- PHP `^8.1 || ^8.2 || ^8.3`
 - Laravel `^13.0`
-- Filament `^5.0`
+- Filament `3.0 || ^4.0 || ^5.0`
+- illuminate/support `^10.0 || ^11.0 || ^12.0 || ^13.0`
 
 ## Install the package via Composer:
 ```
@@ -67,8 +68,7 @@ Turnstile::make('captcha'),
 ```
 
 ```php
-use Adipradana\FilamentTurnstile\Turnstile;
-use Filament\Forms\Components\TextInput;
+use Adipradana\FilamentTurnstile\Turnstile;use Filament\Forms\Components\TextInput;
 
 TextInput::make('number')
     ->numeric()

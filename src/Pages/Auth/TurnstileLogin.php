@@ -2,30 +2,21 @@
 
 namespace Adipradana\FilamentTurnstile\Pages\Auth;
 
-<<<<<<< HEAD
-use Filament\Auth\Http\Responses\Contracts\LoginResponse;
-use Filament\Auth\Pages\Login;
-use Filament\Schemas\Schema;
-use Kementerian\FilamentTurnstile\Turnstile;
-=======
 use Adipradana\FilamentTurnstile\Turnstile;
 use Filament\Auth\Http\Responses\Contracts\LoginResponse;
 use Filament\Auth\Pages\Login;
 use Filament\Schemas\Schema;
 
->>>>>>> 92f13c2 (feat: initial release filament turnstile)
-
 class TurnstileLogin extends Login
 {
     public function form(Schema $schema): Schema
     {
-        return $schema
-            ->components([
-                $this->getEmailFormComponent(),
-                $this->getPasswordFormComponent(),
-                $this->getRememberFormComponent(),
-                Turnstile::make(),
-            ]);
+        return $schema->components([
+            $this->getEmailFormComponent(),
+            $this->getPasswordFormComponent(),
+            $this->getRememberFormComponent(),
+            Turnstile::make(),
+        ]);
     }
 
     public function authenticate(): ?LoginResponse
